@@ -8,6 +8,8 @@ import { UsersController } from './users/users.controller';
 import { AuthModule } from './auth/auth.module';
 import { SubjectsModule } from './subjects/subjects.module';
 import { TopicsModule } from './topics/topics.module';
+import { CommonModule } from './common/common.module';
+import { CompletionsModule } from './completions/completions.module';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { TopicsModule } from './topics/topics.module';
     UsersModule,
     AuthModule,
     SubjectsModule,
-    TopicsModule
+    TopicsModule,
+    CommonModule,
+    CompletionsModule
   ],
   controllers: [AppController, UsersController],
   providers: [AppService],
