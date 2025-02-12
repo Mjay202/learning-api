@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { AuthModule } from './auth/auth.module';
+import { SubjectsModule } from './subjects/subjects.module';
+import { TopicsModule } from './topics/topics.module';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { AuthModule } from './auth/auth.module';
       synchronize: process.env.APP_ENV !== 'PRODUCTION'
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    SubjectsModule,
+    TopicsModule
   ],
   controllers: [AppController, UsersController],
   providers: [AppService],

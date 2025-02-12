@@ -18,10 +18,19 @@ export class UsersController {
   async getProfile(@Request() req) {
     return req.user;
   }
-
+  @Get('by-id/:id')
+  async findById(@Param('id') id: string) {
+    return this.userService.findById(id);
+    }
+    
   @Get('by-slug/:slug')
   async findBySlug(@Param('slug') slug: string) {
     return this.userService.findBySlug(slug);
+  }
+
+  @Get('by-email/:email')
+  async findByEmail(@Param('email') email: string) {
+    return this.userService.findByEmail(email);
   }
 
   @Post()
