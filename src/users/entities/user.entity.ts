@@ -1,6 +1,12 @@
 import slugify from "slugify";
 import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import {hash} from 'bcrypt'
+import * as argon2 from 'argon2';
+
+export enum UserType {
+  ADMIN = 'Admin',
+  TEACHER = 'Teacher',
+  STUDENT = 'Student',
+}
 
 @Entity()
 export class User {
@@ -19,6 +25,13 @@ export class User {
   @Column()
   password: string;
 
+  @Column({
+    type: 'enum',
+    enum: UserType,
+    default: UserType.STUDENT
+  })
+  user_type: UserType;
+
   @BeforeInsert()
   @BeforeUpdate()
   generateSlug() {
@@ -27,11 +40,11 @@ export class User {
       }
     }
     
-    @BeforeInsert()
-    async hashPassword() {
-       if (!this.password) {
-         throw new Error('Password is required before hashing');
-       }
-        this.password = await hash(this.password, 10);
-    }
+    // @BeforeInsert()
+    // async hashPassword() {
+    //    if (!this.password) {
+    //      throw new Error('Password is required before hashing');
+    //    }
+    //     this.password = await argon2.hash(this.password);
+    // }
 }
