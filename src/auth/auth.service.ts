@@ -16,8 +16,8 @@ export class AuthService {
     ) { }
     
     private async validateUser(email: string, password: string): Promise<UserLoginCredentials | null> {
+        // Get user Login Credentials
         const user = await this.usersService.getLoginCredentials(email);
-
         if (!user) throw new UnauthorizedException('Invalid credentials');
 
         const isPasswordValid = await argon2.verify(
@@ -47,6 +47,8 @@ export class AuthService {
     }
 
     async login(dto: UserLoginDto) {
+
+        // Checking user validation
         const user = await this.validateUser(dto.email, dto.password);
         if (!user) throw new UnauthorizedException('Invalid credentials');
        
