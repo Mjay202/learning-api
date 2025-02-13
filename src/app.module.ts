@@ -18,6 +18,7 @@ import { CompletionsModule } from './completions/completions.module';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
+      
       synchronize: process.env.APP_ENV !== 'PRODUCTION'
     }),
     UsersModule,

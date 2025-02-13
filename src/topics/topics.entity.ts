@@ -1,5 +1,6 @@
+import { Completion } from 'src/completions/completions.entity';
 import { Subject } from 'src/subjects/subject.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 
 @Entity()
@@ -19,8 +20,17 @@ export class Topic {
   @Column('text')
   description: string;
 
+  @CreateDateColumn({ type: 'timestamp', nullable: true })
+  created_at: Date | null;
+
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  updated_at: Date | null;
+
   @ManyToOne(() => Subject, (subject) => subject.topics, {
     onDelete: 'CASCADE',
   })
   subject: Subject;
+
+  @OneToMany(() => Completion, (completion) => completion.topic)
+  completions: Completion;
 }

@@ -72,6 +72,15 @@ export class TopicsService {
       return this.update(topic, topicDto)
     }
     
+  async findAll() {
+    return this.topicRepo
+      .createQueryBuilder('topic')
+      .leftJoinAndSelect('topic.subject', 'subject')
+      .orderBy('subject.slug', 'ASC')
+      // .addOrderBy('topic.created_at', 'DESC')
+      .getMany()     
+  }
+
   async findById(id: string): Promise<Topic> {
     const topic = await this.topicRepo.findOne({
       where: { id },
