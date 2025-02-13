@@ -24,15 +24,26 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Learning Api](https://documenter.getpostman.com/view/37298311/2sAYXCkJZm). A  <bold>Learning Management System</bold> that enables learners to track their topic completion, rank users based on subject completion rates, and allows teachers/admins to view learner rankings.
+This is a technical task from People Culture
+
 
 ## Project setup
 
 ```bash
+#Install all dependencies
 $ npm install
 ```
 
-## Compile and run the project
+## Create an .env file in the root directory and set the following environment variables:
+DATABASE_URL=********
+APP_ENV=DEVELOPMENT
+POSTGRES_USER=************
+POSTGRES_PASSWORD=***********
+POSTGRES_DB=**************
+JWT_ACCESS_SECRET=**********
+
+## Compile and run the project without docker
 
 ```bash
 # development
@@ -45,55 +56,66 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
+## Run with Docker
 
 ```bash
-# unit tests
-$ npm run test
+# docker build
+$ docker-compose up --build -d
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+# check running containers
+$ docker ps
+
+# to stop the container
+$ docker-compose down
 ```
+## Documentation
+Check full documentation here on [Postman](https://documenter.getpostman.com/view/37298311/2sAYXCkJZm)
 
-## Deployment
+## Approach Used
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+-Modular architecture: The app is structured into modules such as UsersModule, SubjectsModule, TopicsModule, and CompletionsModule to ensure separation of concerns.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+-TypeORM: Used for interacting with PostgreSQL, with entities defining the schema and relationships.
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+-DTOs & Validation: DTOs (Data Transfer Objects) ensure type safety and validation when handling requests.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+-Auto-generation of slugs: Unique slugs are created for subjects and topics to allow cleaner URLs and references. This aids user experience greatly.
+
+-Authentication & Authorization: JWT is used for authentication, ensuring secure access to protected routes.
+
+## Assumptions Made
+-Users will have unique slugs and id(uuid): Each user has a unique slug for easier identification.
+
+-User Type includes: Student (Default), Teacher and Admin.
+
+-Subjects and topics are uniquely identified by slugs and id(uuid): The API assumes slugs instead of numeric IDs for routing.
+
+-Completion tracking is tied to topics: Users' progress is stored based on topics they complete under each subject.
+
+-Admin/Teachers can view rankings when they click on subjects. Students only view subjects and topics related only.
+
 
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- [NestJs](https://docs.nestjs.com/)
+- [TypeOrm](https://typeorm.io/)
+- [Postman](https://www.postman.com/)
+- [Docker](https://www.docker.com/)
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+This **README.md** covers setup, API endpoints, approach, and assumptions. Let me know if you want anything adjusted! 🚀🔥
+ [read more here](mujee.o.hammed@gmail.com).
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Mujeeb Hammed](https://https://x.com/HammedMujeeb2)
+- Deployed Solution - [https://learning-api-c33p.onrender.com](https://learning-api-c33p.onrender.com)
+- PostMan Documentation - [@Postman](https://documenter.getpostman.com/view/37298311/2sAYXCkJZm)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This App is  [People Culture licensed](peopleandculture@hirenex.africa) @2025.
