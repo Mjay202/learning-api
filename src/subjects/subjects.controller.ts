@@ -9,7 +9,7 @@ export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) {}
 
   @Post()
-  create(@Body() dto: CreateSubjectDto) {
+  async create(@Body() dto: CreateSubjectDto) {
     return this.subjectsService.create(dto);
   }
 
@@ -19,18 +19,22 @@ export class SubjectsController {
   }
 
   @Get(':id')
-  findOne(@Request() req, @Param('id') id: string) {
-      if (req.user.user_type !== 'Admin' && req.user.user_type !== 'Teacher') {
+  async findOne(@Request() req, @Param('id') id: string) {
+    if (req.user.user_type !== 'Admin' && req.user.user_type !== 'Teacher') {
       return this.subjectsService.findOneById(id);
     }
     return this.subjectsService.findOneWithRankingsById(id);
   }
 
   @Get('by-slug/:slug')
-  findOneBySlug(@Param('slug') slug: string) {
-    return this.subjectsService.findOneBySlug(slug);
-  }
+  async findOneBySlug(@Request() req, @Param('slug') slug: string) {
+    if (req.user.user_type !== 'Admin' && req.user.user_type !== 'Teacher') {
+      return this.subjectsService.findOneBySlug(slug);
+    }
 
+    const user = await this.subjectsService.findOneBySlug(slug);
+    return this.subjectsService.findOneWithRankingsById(user.id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body('title') title: string) {

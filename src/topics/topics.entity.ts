@@ -1,6 +1,6 @@
 import { Completion } from 'src/completions/completions.entity';
 import { Subject } from 'src/subjects/subject.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
 
 
 @Entity()
@@ -29,6 +29,7 @@ export class Topic {
   @ManyToOne(() => Subject, (subject) => subject.topics, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'subject_id' })
   subject: Subject;
 
   @OneToMany(() => Completion, (completion) => completion.topic)

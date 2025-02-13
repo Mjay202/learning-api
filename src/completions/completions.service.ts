@@ -71,20 +71,23 @@ export class CompletionService {
   }
 
   async getSubjectRankings(subjectId: string) {
-    return await this.completionRepo
-      .createQueryBuilder('completion')
-      .select('user.id', 'user_id')
-      .addSelect('user.slug', 'user_slug')
-      .addSelect('user.email', 'user_email')
-      .addSelect('COUNT(completion.id)', 'topics_completed')
-      .addSelect(
-        '(COUNT(completion.id) / (SELECT COUNT(*) from topic WHERE subject = :subjectId) * 100)',
-        'completion_percentage',
-      )
-      .innerJoin('completion.user', 'user')
-      .where('completion.subject = :subjectId', { subjectId })
-      .groupBy('user.id')
-      .orderBy('topics_completed', 'DESC')
-      .getRawMany();
+
+  return await this.completionRepo
+    .createQueryBuilder('completion')
+    .select('user.id', 'user_id')
+    .addSelect('user.slug', 'user_slug')
+    .addSelect('user.email', 'user_email')
+    .addSelect('COUNT(completion.id)', 'topics_completed')
+    .addSelect(
+      '(COUNT(completion.id) * 100 / (SELECT COUNT(*) from topic WHERE subject_id = :subjectId))',
+      'completion_percentage',
+    )
+    .innerJoin('completion.user', 'user')
+    .where('completion.subject = :subjectId', { subjectId })
+    .groupBy('user.id')
+    .orderBy('topics_completed', 'DESC')
+    .getRawMany();
+    
+  
   }
 }
